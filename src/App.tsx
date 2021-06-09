@@ -2,14 +2,25 @@
 import React, { useState } from 'react';
 import './App.css';
 type FormElement = React.FormEvent<HTMLFormElement>;
+interface ITodo {
+	text: string;
+	complete: boolean;
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App() {
 	const [value, setValue] = useState<string>('');
+	const [todos, setTodos] = useState<ITodo[]>([]);
 
 	const handeSubmit = (e: FormElement): void => {
 		e.preventDefault();
+		addTodo(value);
 		setValue('');
+	};
+
+	const addTodo = (text: string) => {
+		const newTodo: ITodo[] = [...todos, { text, complete: false }];
+		setTodos(newTodo);
 	};
 	return (
 		<>
@@ -23,6 +34,11 @@ export default function App() {
 				/>
 				<button type="submit">Add Todo</button>
 			</form>
+			<div>
+				{todos.map((todo: ITodo, index: number) => (
+					<div key={index}>{todo.text}</div>
+				))}
+			</div>
 		</>
 	);
 }
