@@ -20,8 +20,16 @@ export default function App() {
 
 	const addTodo = (text: string) => {
 		const newTodo: ITodo[] = [...todos, { text, complete: false }];
+		console.log(newTodo);
 		setTodos(newTodo);
+		// localStorage.setItem('todo', JSON.stringify(newTodo));
 	};
+	// let test: ITodo[] = [...storage];
+	// if (storage) {
+	// 	test = [...storage];
+	// 	setTodos(test);
+	// }
+
 	return (
 		<>
 			<h1>Todo List</h1>
@@ -35,9 +43,16 @@ export default function App() {
 				<button type="submit">Add Todo</button>
 			</form>
 			<div>
-				{todos.map((todo: ITodo, index: number) => (
-					<div key={index}>{todo.text}</div>
-				))}
+				{todos.map((todo: ITodo, index: number) =>
+					todo.complete ? (
+						''
+					) : (
+						<div key={index}>
+							{todo.text}
+							{todo.complete}
+						</div>
+					)
+				)}
 			</div>
 		</>
 	);
